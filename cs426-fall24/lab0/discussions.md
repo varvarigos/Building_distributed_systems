@@ -2,7 +2,7 @@
 When a message is sent, the sender blocks until a receiver is ready to accept the message.
 On the other hand, a buffered channel if defined by its buffer length, and allows messages to
 be sent without blocking, as long as the buffer is not full. The sender only blocks when the number
-of messages reaches the buffer's capacity.
+of messages exceeds the buffer's capacity.
 
 6. The default channel in Go is unbuffered.
 
