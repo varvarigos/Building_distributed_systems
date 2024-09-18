@@ -85,5 +85,5 @@ all done!
 ```
 This is because the goroutines run concurrently to the for loop. Inside each goroutine, there is a delay of some time
 before printing the value of i. However, at that time, the for loop will have incremented the value of i to 4. Once,
-the timer is over for each subroutine, the value of i will be printed, which will be the number 4. In older versions of Go,
+the timer is over for each goroutine, the value of i will be printed, which will be the number 4. In older versions of Go,
 loop variables had a per-loop scope, which is why all goroutines reference the same final value of i.
