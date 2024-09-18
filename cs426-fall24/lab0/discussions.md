@@ -8,10 +8,6 @@ length, and blocks when the number of messages exceeds that capacity.
 However, because it is an unbuffered channel and there is no corresponding receiver at that moment, the program will block
 on that send operation, waiting for a receiver to read from the channel. However, the receiving `<-ch` occurs after the send operation, so the program never reaches that point. This causes a deadlock because the program is stuck waiting for a receiver.
 
-The channel receives the string 
-"hello world!". Then the string is read from the channel and is stored in the 'message' variable.
-Finally, "hello world!" is printed.
-
 6. `<-chan T` defines a read-only channel of type T, i.e. you can only reveive data from the channel;
 `chan<- T` defines a write-only channel of type T, i.e. you can only send data to the channel; 
 `chan T` defines a bidirectional (read-write) channel of type T (both send and reveive channel),
