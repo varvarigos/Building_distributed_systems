@@ -31,7 +31,7 @@ all done!
 2
 3
 ```
-<br> This is because the gorroutines run concurrently. Inside each goroutine there is a delay of some time before printing
+This is because the gorroutines run concurrently. Inside each goroutine there is a delay of some time before printing
 the value of i. However, at that time, the for loop will have terminated and, thus, "all done!", will be printed first.
 Then, after the time delay of each goroutine finishes, the numbers will be printed.
 
