@@ -1,0 +1,26 @@
+ESTIMATE of time to complete assignment: 10 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+9/11  5:00pm   1:00  read the assignment, experimented with Go language,
+                     and started doing the written answers of the lab.
+9/12  11:00am  2:00  finished the written questions and started reading
+                     requirements of the next part.
+9/13  1:30pm   2:30  wrote code for merge, merge or cancel, and fetch
+                     functions.
+9/14  7:05pm  2:00   wrote tests for merge, merge or cancel, and fetch
+                     functions and made corrections according to the tests.
+9/15  12:30pm  2:00  wrote code for queue, parallel fetcher, and semaphore;
+9/16  12:30pm  2:00  wrote tests for queue, parallel fetcher, and semaphore
+                     and made corrections according to the tests;
+9/17  12:30pm  0:45  finalized my answers.
+               ----
+               12:15  TOTAL time spent
+
+Some challenges that I faced included getting familiar/becoming more fluent
+with the Go language. Also, I was initially challenged for coming up with edge
+cases for tests and making sure implementations are correct, e.g. for the
+MergeChannelsOrCancel function, for which I was unsure about its behavior
+when data is successfully read by a channel but we cancel before it is written
+to the out channel.
