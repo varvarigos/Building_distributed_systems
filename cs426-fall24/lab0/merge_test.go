@@ -279,36 +279,6 @@ func TestMergeOrCancel(t *testing.T) {
 		require.GreaterOrEqual(t, len(chanToSlice(out)), 1)
 		require.LessOrEqual(t, len(chanToSlice(out)), 10000)
 	})
-
-	t.Run("merge identical channels", func(t *testing.T) {
-		ctx := context.Background()
-
-		a := make(chan string, 5)
-		b := make(chan string, 5)
-		out := make(chan string, 15)
-
-		expected := []string{}
-		for i := 1; i <= 5; i++ {
-			val := fmt.Sprintf("%d", i)
-			a <- val
-			b <- val
-
-			expected = append(expected, val)
-			expected = append(expected, val)
-		}
-
-		close(a)
-		close(b)
-
-		eg, _ := errgroup.WithContext(context.Background())
-		eg.Go(func() error {
-			return lab0.MergeChannelsOrCancel(ctx, a, b, out)
-		})
-
-		err := eg.Wait()
-		require.NoError(t, err)
-		require.ElementsMatch(t, expected, chanToSlice(out))
-	})
 }
 
 type channelFetcher struct {
@@ -331,7 +301,7 @@ func TestMergeFetches(t *testing.T) {
 }
 
 func TestMergeFetchesAdditional(t *testing.T) {
-	// TODO: add your extra tests here
+	// My own tests
 	t.Run("single-element fetchers", func(t *testing.T) {
 		a := make(chan string, 1)
 		b := make(chan string, 1)
@@ -367,6 +337,36 @@ func TestMergeFetchesAdditional(t *testing.T) {
 
 		expected := []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
 			"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}
+		require.ElementsMatch(t, expected, chanToSlice(out))
+	})
+
+	t.Run("merge identical channels", func(t *testing.T) {
+		ctx := context.Background()
+
+		a := make(chan string, 5)
+		b := make(chan string, 5)
+		out := make(chan string, 15)
+
+		expected := []string{}
+		for i := 1; i <= 5; i++ {
+			val := fmt.Sprintf("%d", i)
+			a <- val
+			b <- val
+
+			expected = append(expected, val)
+			expected = append(expected, val)
+		}
+
+		close(a)
+		close(b)
+
+		eg, _ := errgroup.WithContext(context.Background())
+		eg.Go(func() error {
+			return lab0.MergeChannelsOrCancel(ctx, a, b, out)
+		})
+
+		err := eg.Wait()
+		require.NoError(t, err)
 		require.ElementsMatch(t, expected, chanToSlice(out))
 	})
 }
