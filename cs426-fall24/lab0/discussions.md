@@ -4,27 +4,31 @@ length, and blocks when the number of messages exceeds that capacity.
 
 2. The default channel in Go is unbuffered.
 
-3. The function defines an unbuffered channel that waits for a string value. The channel receives the string 
+3. The function defines an unbuffered channel that waits for a string value. The channel receives the string "hello world!".
+However, because it is an unbuffered channel and there is no corresponding receiver at that moment, the program will block
+on that send operation, waiting for a receiver to read from the channel. However, the receiving `<-ch` occurs after the send operation, so the program never reaches that point. This causes a deadlock because the program is stuck waiting for a receiver.
+
+The channel receives the string 
 "hello world!". Then the string is read from the channel and is stored in the 'message' variable.
 Finally, "hello world!" is printed.
 
-4. `<-chan T` defines a read-only channel of type T, i.e. you can only reveive data from the channel;
+6. `<-chan T` defines a read-only channel of type T, i.e. you can only reveive data from the channel;
 `chan<- T` defines a write-only channel of type T, i.e. you can only send data to the channel; 
 `chan T` defines a bidirectional (read-write) channel of type T (both send and reveive channel),
 i.e. you can send and receive data to and from the channel.
 
-5. Reading from a closed channel will return the zero value of its type or any remaining data in the channel.
+7. Reading from a closed channel will return the zero value of its type or any remaining data in the channel.
 Reading from a nil channel will cause an indefinite block.
 
-6. The for loop will terminate when the channel has closed and all of its elements have been read. If the channel
+8. The for loop will terminate when the channel has closed and all of its elements have been read. If the channel
 does not close, the loop will continue even if the channel does not have any elements to be read.
 
-7. You can determine if a `context.Context` is done by checking the `Done()` channel; if the channel is closed,
+9. You can determine if a `context.Context` is done by checking the `Done()` channel; if the channel is closed,
 the context is done, otherwise it is not. <br>
 You can detetmine if `context.Context` is canceled by checking `Err()` function; if it was canceled, then
 the error returned by `Err()` would be "context canceled".
 
-8. The program will most likely print the following: <br>
+10. The program will most likely print the following: <br>
 ```
 all done!
 1
