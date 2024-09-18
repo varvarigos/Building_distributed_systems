@@ -8,9 +8,9 @@ length, and blocks when the number of messages exceeds that capacity.
 "hello world!". Then the string is read from the channel and is stored in the 'message' variable.
 Finally, "hello world!" is printed.
 
-4. <-chan T defines a read-only channel of type T, i.e. you can only reveive data from the channel;
-chan<- T defines a write-only channel of type T, i.e. you can only send data to the channel; 
-chan T defines a bidirectional (read-write) channel of type T (both send and reveive channel),
+4. `<-chan T` defines a read-only channel of type T, i.e. you can only reveive data from the channel;
+`chan<- T` defines a write-only channel of type T, i.e. you can only send data to the channel; 
+`chan T` defines a bidirectional (read-write) channel of type T (both send and reveive channel),
 i.e. you can send and receive data to and from the channel.
 
 5. Reading from a closed channel will return the zero value of its type or any remaining data in the channel.
