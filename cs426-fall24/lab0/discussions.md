@@ -35,7 +35,9 @@ all done!
 ```
 This is because the goroutines run concurrently. Inside each goroutine there is a delay of some time before printing
 the value of i. However, at that time, the for loop will have terminated and, thus, "all done!", will be printed first.
-Then, after the time delay of each goroutine finishes, the numbers will be printed.
+Then, after the time delay of each goroutine finishes, the numbers will be printed. Note that for Go 1.22 onwards, the 
+loop variables have a per-iteration scope (instead of a per-loop scope), so each goroutine prints the value of i from
+its respective iteration.
 
 9. To fix the issue in 8. and print "all done!" after the numbers, we can use synchronization primitives.
 More specifically, we can use `sync.WaitGroup` and wait for the 3 goroutines to finish before accessing
@@ -83,4 +85,5 @@ all done!
 ```
 This is because the goroutines run concurrently to the for loop. Inside each goroutine, there is a delay of some time
 before printing the value of i. However, at that time, the for loop will have incremented the value of i to 4. Once,
-the timer is over for each subroutine, the value of i will be printed, which will be the number 4.
+the timer is over for each subroutine, the value of i will be printed, which will be the number 4. In older versions of Go,
+loop variables had a per-loop scope, which is why all goroutines reference the same final value of i.
