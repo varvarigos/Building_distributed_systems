@@ -56,14 +56,14 @@ go func() {
 A semaphore, `semaphore.Weighted`, on the other hand, allows up to N goroutines to access a resource simultaneously 
 rather than limiting the access to only a single goroutine.
 
-11. The program prints the following: <br>
-[] <br>
-0 <br>
-true <br>
-<br>
-0 <br>
-<nil> <br>
-{} <br>
+11. The program prints the following:
+    []  
+    0  
+    true  
+
+    0  
+    <nil>  
+    {}
 
 12. `struct{}` is a zero-size struct type (no information stored), often used when we need to signal events without
 sending data. Using `chan struct{}` makes it clear that the channel is used solely for signaling, as values sent over
