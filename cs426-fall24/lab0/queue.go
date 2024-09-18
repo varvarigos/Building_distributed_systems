@@ -1,6 +1,8 @@
 package lab0
 
-import "sync"
+import (
+	"sync"
+)
 
 // Queue is a simple FIFO queue that is unbounded in size.
 // Push may be called any number of times and is not
@@ -21,8 +23,8 @@ func NewQueue[T any]() *Queue[T] {
 // Push adds an item to the end of the queue.
 func (q *Queue[T]) Push(item T) {
 	q.m.Lock()
+	defer q.m.Unlock()
 	q.elements = append(q.elements, item)
-	q.m.Unlock()
 }
 
 // Pop removes an item from the beginning of the queue
@@ -34,15 +36,14 @@ func (q *Queue[T]) Push(item T) {
 // this section of the Tour of Go: https://go.dev/tour/basics/12
 func (q *Queue[T]) Pop() (T, bool) {
 	q.m.Lock()
+	defer q.m.Unlock()
 
 	if len(q.elements) == 0 {
-		q.m.Unlock()
 		var dflt T
 		return dflt, false
 	}
 	item := q.elements[0]
 	q.elements = q.elements[1:]
-	q.m.Unlock()
 	return item, true
 }
 
@@ -67,18 +68,17 @@ func NewConcurrentQueue[T any]() *ConcurrentQueue[T] {
 // Push adds an item to the end of the queue
 func (q *ConcurrentQueue[T]) Push(t T) {
 	q.m.Lock()
+	defer q.m.Unlock()
 	q.queue.Push(t)
-	q.m.Unlock()
 }
 
 func (q *ConcurrentQueue[T]) Pop() (T, bool) {
 	q.m.Lock()
+	defer q.m.Unlock()
 
 	if len(q.queue.elements) == 0 {
-		q.m.Unlock()
 		var dflt T
 		return dflt, false
 	}
-	q.m.Unlock()
 	return q.queue.Pop()
 }
