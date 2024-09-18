@@ -25,15 +25,17 @@ You can detetmine if `context.Context` is canceled by checking `Err()` function;
 the error returned by `Err()` would be "context canceled".
 
 8. The program will most likely print the following: <br>
-all done! <br>
-1 <br>
-2 <br>
-3 <br>
+```
+all done!
+1
+2
+3
+```
 This is because the gorroutines run concurrently. Inside each goroutine there is a delay of some time before printing
 the value of i. However, at that time, the for loop will have terminated and, thus, "all done!", will be printed first.
 Then, after the time delay of each goroutine finishes, the numbers will be printed.
 
-9. To fix the issue in 8. and print "all done!" after the numbers, we can use synchronization primitives.
+10. To fix the issue in 8. and print "all done!" after the numbers, we can use synchronization primitives.
 More specifically, we can use `sync.WaitGroup` and wait for the 3 goroutines to finish before accessing
 `fmt.Println("all done!")`. Below are the changes to the initial code that need to be made to fix the issue.
 ```
@@ -63,7 +65,7 @@ rather than limiting the access to only a single goroutine.
     true  
 
     0  
-    \<nil\>  
+    <nil>
     {}
 ```
 13. `struct{}` is a zero-size struct type (no information stored), often used when we need to signal events without
@@ -71,10 +73,12 @@ sending data. Using `chan struct{}` makes it clear that the channel is used sole
 the channel have no content and take up zero bytes of memory.
 
 14. The program will most likely print the following: <br>
-4 <br>
-4 <br>
-4 <br>
-all done! <br>
+```
+4
+4
+4
+all done!
+```
 This is because the goroutines run concurrently to the for loop. Inside each goroutine, there is a delay of some time
 before printing the value of i. However, at that time, the for loop will have incremented the value of i to 4. Once,
 the timer is over for each subroutine, the value of i will be printed, which will be the number 4.
