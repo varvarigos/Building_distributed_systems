@@ -154,41 +154,7 @@ func TestParallelFetcherAdditional(t *testing.T) {
 		require.False(t, ok)
 	})
 
-	t.Run("large concurrency (STRESS)", func(t *testing.T) {
-		N := 1000
-		data := make([]string, N)
-		for i := 0; i < N; i++ {
-			data[i] = strconv.Itoa(i)
-		}
-
-		mf := NewMockFetcher(data, 10*time.Millisecond)
-		pf := lab0.NewParallelFetcher(mf, 10)
-
-		wg := sync.WaitGroup{}
-		results := make([]string, 0, N)
-
-		m := sync.Mutex{}
-		for i := 0; i < N; i++ {
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
-				v, ok := pf.Fetch()
-				if ok {
-					m.Lock()
-					results = append(results, v)
-					m.Unlock()
-				}
-			}()
-		}
-
-		wg.Wait()
-		checkResultSet(t, data, results)
-
-		_, ok := pf.Fetch()
-		require.False(t, ok)
-	})
-
-	t.Run("random fetch", func(t *testing.T) {
+	t.Run("concurrent fetch", func(t *testing.T) {
 		N := 100
 		data := make([]string, N)
 		for i := 0; i < N; i++ {
@@ -222,6 +188,40 @@ func TestParallelFetcherAdditional(t *testing.T) {
 		require.False(t, ok)
 	})
 
+	t.Run("large concurrency (STRESS)", func(t *testing.T) {
+		N := 1000
+		data := make([]string, N)
+		for i := 0; i < N; i++ {
+			data[i] = strconv.Itoa(i)
+		}
+
+		mf := NewMockFetcher(data, 10*time.Millisecond)
+		pf := lab0.NewParallelFetcher(mf, 10)
+
+		wg := sync.WaitGroup{}
+		results := make([]string, 0, N)
+
+		m := sync.Mutex{}
+		for i := 0; i < N; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				v, ok := pf.Fetch()
+				if ok {
+					m.Lock()
+					results = append(results, v)
+					m.Unlock()
+				}
+			}()
+		}
+
+		wg.Wait()
+		checkResultSet(t, data, results)
+
+		_, ok := pf.Fetch()
+		require.False(t, ok)
+	})
+	
 	t.Run("single fetcher", func(t *testing.T) {
 		data := []string{"x", "y", "z"}
 		pf := lab0.NewParallelFetcher(NewMockFetcher(data, 0), 1)
