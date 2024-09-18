@@ -9,7 +9,7 @@ Date  Started  Spent Work completed
                      requirements of the next part.
 9/13  1:30pm   2:30  wrote code for merge, merge or cancel, and fetch
                      functions.
-9/14  7:05pm  2:00   wrote tests for merge, merge or cancel, and fetch
+9/14  7:05pm   2:00  wrote tests for merge, merge or cancel, and fetch
                      functions and made corrections according to the tests.
 9/15  12:30pm  2:00  wrote code for queue, parallel fetcher, and semaphore;
 9/16  12:30pm  2:00  wrote tests for queue, parallel fetcher, and semaphore
@@ -18,9 +18,11 @@ Date  Started  Spent Work completed
                ----
                12:15  TOTAL time spent
 
-Some challenges that I faced included getting familiar/becoming more fluent
-with the Go language. Also, I was initially challenged for coming up with edge
-cases for tests and making sure implementations are correct, e.g. for the
-MergeChannelsOrCancel function, for which I was unsure about its behavior
-when data is successfully read by a channel but we cancel before it is written
-to the out channel.
+Some challenges that I faced included getting familiar with and becoming more fluent
+in programming in Go and concurrent programming. This also included understanding the 
+language to be able to answer the written questions correctly. Moreover, it took me some time
+until I had learnt to constract correct and running tests. Also, I was initially
+challenged for coming up with interesting edge cases for tests and subsequently making
+sure my implementations were correct (debugging). Specifically, for the MergeChannelsOrCancel
+function I was unsure about its behavior when data is successfully read by a channel but we
+cancel before it is written to the out channel.
