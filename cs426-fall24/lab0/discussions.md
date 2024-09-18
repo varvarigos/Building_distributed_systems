@@ -60,7 +60,7 @@ rather than limiting the access to only a single goroutine.
 [] <br>
 0 <br>
 true <br>
-<br>
+\hspace{0.1cm}<br>
 0 <br>
 <nil> <br>
 {} <br>
