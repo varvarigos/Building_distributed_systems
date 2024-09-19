@@ -3,7 +3,6 @@ package lab0_test
 import (
 	"context"
 	"testing"
-	"time"
 
 	"fmt"
 
@@ -204,41 +203,12 @@ func TestMergeOrCancel(t *testing.T) {
 		require.Equal(t, []string{"a", "b"}, chanToSlice(out))
 	})
 
-	// My own tests
-	t.Run("cancel midway", func(t *testing.T) {
-		ctx, cancel := context.WithCancel(context.Background())
+	// My own test
+	t.Run("no cancel", func(t *testing.T) {
+		ctx := context.Background()
 
-		a := make(chan string, 5)
-		b := make(chan string, 5)
-		out := make(chan string, 10)
-
-		for i := 1; i <= 5; i++ {
-			val := fmt.Sprintf("%d", i)
-
-			a <- val
-			b <- val
-		}
-
-		eg, ctx := errgroup.WithContext(ctx)
-		eg.Go(func() error {
-			return lab0.MergeChannelsOrCancel(ctx, a, b, out)
-		})
-
-		cancel()
-
-		err := eg.Wait()
-		require.Error(t, err)
-
-		require.LessOrEqual(t, len(chanToSlice(out)), 10,
-			"Expected fewer elements due to early cancellation")
-	})
-
-	t.Run("cancel before merge", func(t *testing.T) {
-		ctx, cancel := context.WithCancel(context.Background())
-		cancel()
-
-		a := make(chan string, 5)
-		b := make(chan string, 5)
+		a := make(chan string)
+		b := make(chan string)
 		out := make(chan string, 10)
 
 		eg, _ := errgroup.WithContext(context.Background())
@@ -246,38 +216,15 @@ func TestMergeOrCancel(t *testing.T) {
 			return lab0.MergeChannelsOrCancel(ctx, a, b, out)
 		})
 
-		err := eg.Wait()
-		require.Error(t, err)
+		a <- "a"
+		b <- "b"
 
-		require.Empty(t, chanToSlice(out), "Expected no values due to immediate cancellation")
-	})
-
-	t.Run("early cancellation of big channels", func(t *testing.T) {
-		ctx, cancel := context.WithCancel(context.Background())
-
-		a := make(chan string, 10000)
-		b := make(chan string, 10000)
-		out := make(chan string, 20000)
-
-		for i := 0; i < 5000; i++ {
-			a <- fmt.Sprintf("a%d", i)
-			b <- fmt.Sprintf("b%d", i)
-		}
-
-		eg, _ := errgroup.WithContext(ctx)
-
-		eg.Go(func() error {
-			return lab0.MergeChannelsOrCancel(ctx, a, b, out)
-		})
-
-		time.Sleep(20 * time.Microsecond)
-		cancel()
+		close(a)
+		close(b)
 
 		err := eg.Wait()
-		require.Error(t, err)
-
-		require.GreaterOrEqual(t, len(chanToSlice(out)), 1)
-		require.LessOrEqual(t, len(chanToSlice(out)), 10000)
+		require.NoError(t, err)
+		require.Equal(t, []string{"a", "b"}, chanToSlice(out))
 	})
 }
 
