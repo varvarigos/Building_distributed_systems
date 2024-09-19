@@ -65,19 +65,16 @@ func MergeChannelsOrCancel[T any](ctx context.Context, a <-chan T, b <-chan T, o
 	readChannel := func(in <-chan T) {
 		defer wg.Done()
 		for {
-			select {
-			case <-ctx.Done():
-				select {
-				case error_channel <- ctx.Err():
-				default:
-				}
+			if Err := ctx.Err(); Err != nil {
+				error_channel <- Err
+				close(out)
 				return
-			case x, ok := <-in:
-				if !ok {
-					return
-				}
-				out <- x
 			}
+			x, ok := <-in
+			if !ok {
+				return
+			}
+			out <- x
 		}
 	}
 
@@ -89,13 +86,13 @@ func MergeChannelsOrCancel[T any](ctx context.Context, a <-chan T, b <-chan T, o
 		close(out)
 	}()
 
-	signal := make(chan struct{})
 	select {
 	case Err := <-error_channel:
 		return Err
 	case <-ctx.Done():
 		return ctx.Err()
 	case <-func() chan struct{} {
+		signal := make(chan struct{})
 		go func() {
 			wg.Wait()
 			close(signal)
