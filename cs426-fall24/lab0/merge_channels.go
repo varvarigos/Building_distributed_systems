@@ -58,48 +58,30 @@ func MergeChannels[T any](a <-chan T, b <-chan T, out chan<- T) {
 // It is expected that your implemented is similar to `MergeChannels`. You do
 // not need to refactor to deduplicate your code, but you can if you want to.
 func MergeChannelsOrCancel[T any](ctx context.Context, a <-chan T, b <-chan T, out chan<- T) error {
-	var wg sync.WaitGroup
-	wg.Add(2)
-
-	error_channel := make(chan error, 1)
-	readChannel := func(in <-chan T) {
-		defer wg.Done()
-		for {
-			if Err := ctx.Err(); Err != nil {
-				error_channel <- Err
-				close(out)
-				return
+	done_a, done_b := false, false
+	for {
+		if Err := ctx.Err(); Err != nil {
+			close(out)
+			return Err
+		} else if done_a && done_b {
+			close(out)
+			return nil
+		} else {
+			select {
+			case x_a, ok_a := <-a:
+				if !ok_a {
+					done_a = true
+				} else {
+					out <- x_a
+				}
+			case x_b, ok_b := <-b:
+				if !ok_b {
+					done_b = true
+				} else {
+					out <- x_b
+				}
 			}
-			x, ok := <-in
-			if !ok {
-				return
-			}
-			out <- x
 		}
-	}
-
-	go readChannel(a)
-	go readChannel(b)
-
-	go func() {
-		wg.Wait()
-		close(out)
-	}()
-
-	select {
-	case Err := <-error_channel:
-		return Err
-	case <-ctx.Done():
-		return ctx.Err()
-	case <-func() chan struct{} {
-		signal := make(chan struct{})
-		go func() {
-			wg.Wait()
-			close(signal)
-		}()
-		return signal
-	}():
-		return nil
 	}
 }
 
