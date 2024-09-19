@@ -71,15 +71,15 @@ func MergeChannelsOrCancel[T any](ctx context.Context, a <-chan T, b <-chan T, o
 			case x_a, ok_a := <-a:
 				if !ok_a {
 					done_a = true
-				} else {
-					out <- x_a
+					continue
 				}
+				out <- x_a
 			case x_b, ok_b := <-b:
 				if !ok_b {
 					done_b = true
-				} else {
-					out <- x_b
+					continue
 				}
+				out <- x_b
 			}
 		}
 	}
