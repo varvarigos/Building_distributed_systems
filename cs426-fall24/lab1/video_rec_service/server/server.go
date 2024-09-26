@@ -59,10 +59,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to start server: %q", err)
 	}
-	go server.ContinuallyRefreshCache()
+
 	pb.RegisterVideoRecServiceServer(s, server)
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+
 }
