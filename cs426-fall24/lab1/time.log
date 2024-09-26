@@ -1,0 +1,24 @@
+ESTIMATE of time to complete assignment: 13 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+9/19  3:00pm   3:00  read the assignment, started with part A, and
+                     tested my implementation (part A6).
+9/21  12:00pm  3:00  wrote tests for part A, made corrections according to
+                     them and implemented batching. Also, did part B, i.e.,
+                     implemented/tested GetStats (part B2).
+9/22  12:00pm  3:30  started with part C, implemented retry (part C1) and wrote
+                     fallback code but had issues.
+9/23  4:00pm   3:00  finished part C, wrote tests for it, and corrected accordingly.
+9/24  12:30pm  3:00  wrote the discussions for part A, B, and C and finalized.
+               15:30 TOTAL time spent
+
+Some challenges I faced was not handling stats updates properly. Debugging issues related
+to stats tracking, was time-consuming and confusing (e.g. implementation decisions such as
+whether to count a fallback as an error or not). Also, implementing test cases for fallback
+and error handling was especially time-consuming as I had to debug my implementation at the
+same time. Additionally, implementing fallback was also challenging and required multiple
+attempts to get it right and see the expected stats updates. Finally, as I left most of the
+discussions for the end, I had to go back and forth between my implementation and rerun the
+code which was time-consuming.
