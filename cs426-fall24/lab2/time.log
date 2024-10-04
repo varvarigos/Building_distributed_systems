@@ -1,0 +1,20 @@
+ESTIMATE of time to complete assignment: 10 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+9/30  1:00pm   4:00  read the assignment, completed part A and wrote 
+                     deployment.yml for B1.
+10/1  11:30am  3:00  completed part B and began with C1.
+10/1   7:00pm  3:30  completed part C.
+10/2  12:30pm  2:30  finalized and completed the discussions questions.
+               13:00 TOTAL time spent
+
+The Kubernetes commands confused me at the beginning, especially when referencing
+the different services and pods. I also spent considerable time for properly adding
+the client pool feature, round-robin logic, and adjusting the connection logic of part
+C. This led to several redeployments and testing, which was time-consuming. Moreover,
+I was not familiar with YAML files before and, thus, I had to spend time getting familiar
+with them by reading the specs/other relevant resources. Additionally, I did not know
+how UUIDs work and how they guarantee universal uniqueness and, thus, spent some time
+researching to provide a complete answer for this discussions question.

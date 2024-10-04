@@ -1,0 +1,16 @@
+apiVersion: cs426.cloud/v1
+kind: LoadgenResult
+metadata:
+  creationTimestamp: "2024-10-01T05:02:27Z"
+  generation: 1
+  name: video-rec-loadgen-req
+  namespace: av774
+  resourceVersion: "22101095"
+  uid: 27d1aa0d-cb94-499c-b3b1-c61c1b6b6e8a
+spec:
+  average_latency_ms: 1056.7646
+  duration_s: 60
+  error_msg: ""
+  errors: 0
+  requests: 51
+  stale_responses: 0
