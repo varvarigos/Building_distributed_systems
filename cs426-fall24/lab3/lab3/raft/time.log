@@ -1,0 +1,27 @@
+ESTIMATE of time to complete assignment: 34 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+10/4  1:00pm   4:00  read the raft paper and other relevant resources.
+10/5  11:00am  3:00  read the lab instructions and some more raft-relevant resources.
+10/6  2:30pm   4:30  started and completed part A1.
+10/7  1:00pm   2:00  completed part A's discussions and wrote some test cases for A.
+10/8  1:00pm   4:30  started with part B1 TestBasicAgree3B.
+10/9  2:30pm   3:00  completed part B1 TestBasicAgree3B and continued with rest of part B.
+10/12 1:30pm   4:00  completed part B and wrote test cases.
+10/13 2:30pm   4:00  started with part C, completed part C1, and began with part C2.
+10/16 4:30pm   3:00  finished with part C and wrote more test cases.
+10/17 6:00pm   3:00  debugging and finishing up.
+10/29 6:00pm   1:30  revisited lab and finalized submission.
+               36:30 TOTAL time spent
+
+Getting familiar with the raft algorithm and understanding the details of the raft paper took me 
+significant time. Debugging for part A was particularly time-consuming, and required me to go back and forth
+multiple times and carefully re-read the raft paper and re-order my code. The discussions of part A also
+required research and some extra time, which I had not anticipated. For TestBasicAgree3B, I encountered
+`one(100) failed to reach agreement` error. Debugging this issue was challenging for me as it was not due to a
+single error, and took me several hours before I had resolved it. The rest of Part B took me a significant time
+as well to complete. I was especially stuck on TestBackup3B, eventually used `rf.hasCommittedChan` to notify the
+leader. Finally, although part C1 was easy to implement, for part C2 I was occasionally failing the TestFigure83C,
+and also the TestFigure8Unreliable3C due to taking too long.

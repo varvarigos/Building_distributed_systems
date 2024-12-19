@@ -1,0 +1,21 @@
+ESTIMATE of time to complete assignment: 24 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+11/2  2:00pm   4:00  read the assignment, completed part A.
+11/3  4:00pm   3:30  started and completed part B.
+11/4  12:30pm  2:30  wrote test cases and started with part C.
+11/4  7:30pm   4:30  completed part C and wrote more test cases/debugging.
+11/5  1:00pm   2:30  completed stress tests (part D) and its discussion question.
+11/5  6:30pm   2:30  completed discussions questions of part A and B and wrote some more tests.
+11/6  2:30pm   1:00  revisited lab and finalized submission.
+               20:30 TOTAL time spent
+
+One part that took me some time was handling errors in Part B3, where I kept failing tests because I mistakenly
+returned an error message even when there was no actual error. Another challenge was getting concurrent `Set`
+operations to run for multiple nodes in Part B4, where I encountered race conditions that required careful
+synchronization to ensure errors were handled properly without interrupting other requests. Implementing
+`handleShardMapUpdate` was also difficult, as I struggled to get shards to update consistently, with some shards
+not being added or removed correctly. Additionally, the discussion in Part D took a significant amount of time as
+I worked to devise meaningful experiments to test the system.
